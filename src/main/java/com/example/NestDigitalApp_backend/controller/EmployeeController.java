@@ -22,7 +22,7 @@ public class EmployeeController {
     @PostMapping(path = "/emplogin",consumes = "application/json", produces = "application/json")
     public HashMap<String, String> UserLogin(@RequestBody Employee e){
         System.out.println(e.getUsername());
-        List<Employee> result=(List<Employee>) dao.UserLogin(e.getUsername(),e.getPassword());
+        List<Employee> result=(List<Employee>) dao.EmployeeLogin(e.getUsername(),e.getPassword());
         System.out.println(result);
         HashMap<String,String> hm=new HashMap<>();
         if(result.size()==0) {
@@ -33,7 +33,7 @@ public class EmployeeController {
             int id =result.get(0).getId();
             hm.put("userId",String.valueOf(id));
             hm.put("status", "success");
-            hm.put("message", "user login success");
+            hm.put("message", "Employee login success");
         }
         return hm;
     }
@@ -57,7 +57,7 @@ public class EmployeeController {
     @PostMapping(path = "/UserById",consumes = "application/json",produces = "application/json")
     public List<Employee> GetUserById(@RequestBody Employee u)
     {
-        return (List<Employee>) dao.FindUserById(u.getId());
+        return (List<Employee>) dao.FindEmployeeById(u.getId());
     }
 
 
