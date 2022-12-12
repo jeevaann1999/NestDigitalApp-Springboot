@@ -10,8 +10,8 @@ import java.util.List;
 public interface EmployeeDao extends CrudRepository<Employee,Integer> {
 
     @Query(value = "SELECT `id`, `designation`, `empcode`, `empname`, `password`, `salary`, `username` FROM `employees` WHERE `username= :username`AND `password`= :password",nativeQuery = true)
-    List<Employee> UserLogin(@Param("username") String username, @Param("password") String password);
+    List<Employee> EmployeeLogin(@Param("username") String username, @Param("password") String password);
 
     @Query(value = "SELECT `id`, `designation`, `empcode`, `empname`, `password`, `salary`, `username` FROM `employees` WHERE `id`= :id",nativeQuery = true)
-    List<Employee> FindUserById(@Param("id") Integer id);
+    List<Employee> FindEmployeeById(@Param("id") Integer id);
 }
