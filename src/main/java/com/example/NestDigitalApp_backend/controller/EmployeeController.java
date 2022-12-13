@@ -4,13 +4,11 @@ package com.example.NestDigitalApp_backend.controller;
 import com.example.NestDigitalApp_backend.dao.EmployeeDao;
 import com.example.NestDigitalApp_backend.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class EmployeeController {
@@ -50,6 +48,30 @@ public class EmployeeController {
         dao.save(e);
         HashMap<String, String> map = new HashMap<>();
         map.put("status", "success");
+        return map;
+    }
+    @CrossOrigin(origins = "*")
+    @GetMapping("/viewemp")
+    public List<Employee> ViewAllPage() {
+        return (List<Employee>) dao.findAll();
+    }
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/searchemp",consumes = "application/json",produces = "application/json")
+    public List<Employee> EmpSearch(@RequestBody Employee e)
+    {
+        String empcode=String.valueOf(e.getEmpcode());
+        System.out.println(empcode);
+        return (List<Employee>) dao.EmpSearch(e.getEmpcode());
+    }
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/deleteemp",consumes = "application/json", produces = "application/json")
+    public Map<String,String> DeleteEmployee(@RequestBody Employee e)
+    {
+        String id=String.valueOf(e.getId());
+        System.out.println(id);
+        dao.DeleteEmployee(e.getId());
+        HashMap<String,String> map=new HashMap<>();
+        map.put("status","success");
         return map;
     }
 
