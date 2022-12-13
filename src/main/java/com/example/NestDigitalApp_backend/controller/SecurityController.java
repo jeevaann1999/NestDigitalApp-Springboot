@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class SecurityController {
@@ -51,6 +52,26 @@ public class SecurityController {
     @GetMapping("/viewsecurity")
     public List<Security> ViewAllSecurity() {
         return (List<Security>) dao.findAll();
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/searchsecurity",consumes = "application/json",produces = "application/json")
+    public List<Security> SecuritySearch(@RequestBody Security s)
+    {
+        String empcode=String.valueOf(s.getEmpcode());
+        System.out.println(empcode);
+        return (List<Security>) dao.SecuritySearch(s.getEmpcode());
+    }
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/deletesecurity",consumes = "application/json", produces = "application/json")
+    public Map<String,String> DeleteSecurity(@RequestBody Security s)
+    {
+        String id=String.valueOf(s.getId());
+        System.out.println(id);
+        dao.DeleteSecurity(s.getId());
+        HashMap<String,String> map=new HashMap<>();
+        map.put("status","success");
+        return map;
     }
 
     @CrossOrigin(origins = "*")
